@@ -1,0 +1,34 @@
+{
+  "name": "bare-which",
+  "version": "1.0.0",
+  "description": "Finds the first instance of an executable in PATH",
+  "main": "index.js",
+  "scripts": {
+    "test": "brittle test/**/*.js",
+    "lint": "standard",
+    "lint:fix": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holepunchto/pear-which.git"
+  },
+  "keywords": [
+    "pear",
+    "which"
+  ],
+  "author": "Holepunch",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/holepunchto/pear-which/issues"
+  },
+  "homepage": "https://github.com/holepunchto/pear-which#readme",
+  "devDependencies": {
+    "brittle": "^3.5.0",
+    "pre-commit": "^1.2.2",
+    "standard": "^17.1.0"
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ]
+}
