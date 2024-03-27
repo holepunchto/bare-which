@@ -10,18 +10,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/holepunchto/pear-which.git"
+    "url": "git+https://github.com/holepunchto/bare-which.git"
   },
   "keywords": [
-    "pear",
+    "bare",
     "which"
   ],
   "author": "Holepunch",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/holepunchto/pear-which/issues"
+    "url": "https://github.com/holepunchto/bare-which/issues"
   },
-  "homepage": "https://github.com/holepunchto/pear-which#readme",
+  "homepage": "https://github.com/holepunchto/bare-which#readme",
   "devDependencies": {
     "brittle": "^3.5.0",
     "pre-commit": "^1.2.2",
