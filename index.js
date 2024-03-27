@@ -75,23 +75,27 @@ async function whichAsync (cmd, options = {}) {
   const { pathEnv, pathExt, pathExtExe } = getPathInfo(cmd, options)
 
   const { all, nothrow } = options
-  const found = []
+  const foundPromises = []
 
   for (const pathEnvPart of pathEnv) {
     const pathCommand = joinPathCommand(pathEnvPart, cmd)
 
     for (const ext of pathExt) {
       const withExt = pathCommand + ext
-      if (await isExecutable(withExt,
-        { pathExt: pathExtExe, ignoreErrors: true })) {
-        if (!all) return withExt
-
-        found.push(withExt)
-      }
+      if (all) {
+        foundPromises.push(
+          isExecutable(withExt, { pathExt: pathExtExe, ignoreErrors: true })
+            .then((isExec) => isExec ? withExt : null)
+        )
+      } else if (await isExecutable(withExt,
+        { pathExt: pathExtExe, ignoreErrors: true })) return withExt
     }
   }
 
-  if (all && found.length) return found
+  const found = (await Promise.all(foundPromises))
+    .filter((item) => item !== null)
+
+  if (all && found.length > 0) return found
   if (nothrow) return null
 
   throw new ErrorNotFound(cmd)
