@@ -8,20 +8,29 @@ on:
 
 jobs:
   test-node:
-    runs-on: ubuntu-latest
+    name: node-${{ matrix.platform }}-${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        node-version: [ 20.x ]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            arch: x64
+          - os: macos-latest
+            platform: darwin
+            arch: x64
+          - os: windows-latest
+            platform: win32
+            arch: x64
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js LTS
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: lts/*
 
       - name: Install dependencies
         run: npm i
