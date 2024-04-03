@@ -8,7 +8,7 @@ on:
 
 jobs:
   test-node:
-    name: node-${{ matrix.platform }}-${{ matrix.arch }}
+    name: ${{ matrix.platform }}-${{ matrix.arch }}
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -44,6 +44,7 @@ jobs:
       - name: Summarize coverage report
         uses: 5monkeys/cobertura-action@master
         with:
+          report_name: coverage-${{ matrix.platform }}-${{ matrix.arch }}
           path: coverage/cobertura-coverage.xml
           show_line: true
           show_branch: true

@@ -8,7 +8,7 @@ on:
 
 jobs:
   test-bare:
-    name: bare-${{ matrix.platform }}-${{ matrix.arch }}
+    name: ${{ matrix.platform }}-${{ matrix.arch }}
     runs-on: ${{ matrix.os }}
 
     strategy:
