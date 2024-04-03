@@ -1,5 +1,5 @@
 const test = require('brittle')
-const { delimiter } = require('bare-path')
+const { delimiter } = require('path')
 const which = require('../')
 const initFixtures = require('./fixtures')
 const { isWindows } = require('which-runtime')

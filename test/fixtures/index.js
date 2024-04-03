@@ -1,5 +1,5 @@
-const fs = require('bare-fs')
-const path = require('bare-path')
+const fs = require('fs')
+const path = require('path')
 const { isWindows } = require('which-runtime')
 
 module.exports = function generateFixtures () {

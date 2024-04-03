@@ -1,5 +1,5 @@
-const { join, delimiter } = require('bare-path')
-const process = require('bare-process')
+const { join, delimiter } = require('path')
+const process = require('process')
 const { isWindows } = require('which-runtime')
 const isExecutable = require('./lib/executable')
 
