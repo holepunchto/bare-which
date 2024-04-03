@@ -30,6 +30,12 @@ await which('ping', { all: true })
 which.sync('ping', { all: true })
 ```
 
+## Options
+- `nothrow` - return null instead of throwing if not found
+- `path` - override the PATH environment variable
+- `pathExt` - override the PATHEXT environment variable
+- `all` - return all matches as an array instead of just the first match
+
 ## License
 
 Apache-2.0
