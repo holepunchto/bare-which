@@ -17,8 +17,8 @@ module.exports = function generateFixtures () {
   if (!fs.existsSync(fixtureLocalDir)) fs.mkdirSync(fixtureLocalDir)
 
   for (const [name, { content, chmod }] of Object.entries(fixtures)) {
-    const executable = name === 'executable'
-    const fileName = isWindows ? (executable ? `${name}.exe` : `${name}.txt`) : name
+    const executable = chmod & 0o111
+    const fileName = isWindows ? (executable ? `${name}.EXE` : `${name}.TXT`) : name
     const fixturePath = path.resolve(fixtureDir, fileName)
 
     fixturePaths[name] = fixturePath
@@ -29,7 +29,7 @@ module.exports = function generateFixtures () {
     fs.chmodSync(fixturePath, chmod)
   }
 
-  const localBinShared = path.resolve(fixtureLocalDir, isWindows ? 'shared.exe' : 'shared')
+  const localBinShared = path.resolve(fixtureLocalDir, isWindows ? 'shared.EXE' : 'shared')
   fixturePaths.localShared = localBinShared
 
   if (!fs.existsSync(localBinShared)) {
