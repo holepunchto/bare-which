@@ -1,12 +1,11 @@
 const fs = require('bare-fs')
 const path = require('bare-path')
+const { isWindows } = require('which-runtime')
 
 module.exports = function generateFixtures () {
   const fixtures = {
-    owned: { content: '#!/bin/bash\necho "mine"', chmod: 0o700 },
-    groupowned: { content: '#!/bin/bash\necho "groupowned"', chmod: 0o770 },
-    everyone: { content: '#!/bin/bash\necho "everyone"', chmod: 0o777 },
-    noone: { content: '#!/bin/bash\necho "noone"', chmod: 0o000 },
+    executable: { content: '#!/bin/bash\necho "executable"', chmod: 0o755 },
+    nonexecutable: { content: '#!/bin/bash\necho "nonexecutable"', chmod: 0o644 },
     shared: { content: '#!/bin/bash\necho "shared"', chmod: 0o755 }
   }
 
@@ -18,7 +17,10 @@ module.exports = function generateFixtures () {
   if (!fs.existsSync(fixtureLocalDir)) fs.mkdirSync(fixtureLocalDir)
 
   for (const [name, { content, chmod }] of Object.entries(fixtures)) {
-    const fixturePath = path.resolve(fixtureDir, name)
+    const executable = name === 'executable'
+    const fileName = isWindows ? (executable ? `${name}.exe` : `${name}.txt`) : name
+    const fixturePath = path.resolve(fixtureDir, fileName)
+
     fixturePaths[name] = fixturePath
 
     if (fs.existsSync(fixturePath)) continue
@@ -27,12 +29,12 @@ module.exports = function generateFixtures () {
     fs.chmodSync(fixturePath, chmod)
   }
 
-  const localBinShared = path.resolve(fixtureLocalDir, 'shared')
+  const localBinShared = path.resolve(fixtureLocalDir, isWindows ? 'shared.exe' : 'shared')
   fixturePaths.localShared = localBinShared
 
   if (!fs.existsSync(localBinShared)) {
-    fs.writeFileSync(localBinShared, fixtures.shared.content, 'utf8')
-    fs.chmodSync(localBinShared, fixtures.shared.chmod)
+    fs.writeFileSync(localBinShared, fixtures.executable.content, 'utf8')
+    fs.chmodSync(localBinShared, fixtures.executable.chmod)
   }
 
   return fixturePaths

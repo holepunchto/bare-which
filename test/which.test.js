@@ -2,6 +2,9 @@ const test = require('brittle')
 const { delimiter } = require('bare-path')
 const which = require('../')
 const initFixtures = require('./fixtures')
+const { isWindows } = require('which-runtime')
+
+const pathExt = isWindows ? '.EXE' : ''
 
 test('which', (t) => {
   const unlikelyToExist = 'this-command-should-not-exist-anywhere'
@@ -22,37 +25,37 @@ test('which', (t) => {
 
   t.test('does not find non-executable', async (t) => {
     await t.test('absolute', async (t) => {
-      await t.is(await which(fixtures.noone, { path: '', nothrow: true }), null)
-      t.is(which.sync(fixtures.noone, { path: '', nothrow: true }), null)
+      await t.is(await which(fixtures.nonexecutable, { path: '', pathExt, nothrow: true }), null)
+      t.is(which.sync(fixtures.nonexecutable, { path: '', pathExt, nothrow: true }), null)
     })
 
     await t.test('in path', async (t) => {
-      await t.is(await which('noone', { path, nothrow: true }), null)
-      t.is(which.sync('noone', { path, nothrow: true }), null)
+      await t.is(await which('nonexecutable', { path, pathExt, nothrow: true }), null)
+      t.is(which.sync('nonexecutable', { path, pathExt, nothrow: true }), null)
     })
   })
 
   t.test('find when executable', async t => {
     await t.test('absolute', async (t) => {
-      await t.is(await which(fixtures.owned, { path: '', nothrow: true }), fixtures.owned)
-      t.is(which.sync(fixtures.owned, { path: '', nothrow: true }), fixtures.owned)
+      await t.is(await which(fixtures.executable, { path: '', pathExt, nothrow: true }), fixtures.executable)
+      t.is(which.sync(fixtures.executable, { path: '', pathExt, nothrow: true }), fixtures.executable)
     })
 
     await t.test('in path', async (t) => {
-      await t.is(await which('owned', { path, nothrow: true }), fixtures.owned)
-      t.is(which.sync('owned', { path, nothrow: true }), fixtures.owned)
+      await t.is(await which('executable', { path, pathExt, nothrow: true }), fixtures.executable)
+      t.is(which.sync('executable', { path, pathExt, nothrow: true }), fixtures.executable)
     })
   })
 
   t.test('find all', async t => {
     await t.test('absolute', async (t) => {
-      await t.alike(await which(fixtures.shared, { path, all: true, nothrow: true }), [fixtures.shared])
-      t.alike(which.sync(fixtures.shared, { path, all: true, nothrow: true }), [fixtures.shared])
+      await t.alike(await which(fixtures.shared, { path, pathExt, all: true, nothrow: true }), [fixtures.shared])
+      t.alike(which.sync(fixtures.shared, { path, pathExt, all: true, nothrow: true }), [fixtures.shared])
     })
 
     await t.test('in path', async (t) => {
-      await t.alike(await which('shared', { path, all: true, nothrow: true }), [fixtures.shared, fixtures.localShared])
-      t.alike(which.sync('shared', { path, all: true, nothrow: true }), [fixtures.shared, fixtures.localShared])
+      await t.alike(await which('shared', { path, pathExt, all: true, nothrow: true }), [fixtures.shared, fixtures.localShared])
+      t.alike(which.sync('shared', { path, pathExt, all: true, nothrow: true }), [fixtures.shared, fixtures.localShared])
     })
   })
 })
