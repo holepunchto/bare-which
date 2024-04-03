@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  lint:
+  test-bare:
     runs-on: ubuntu-latest
 
     strategy:
