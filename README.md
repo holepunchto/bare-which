@@ -5,7 +5,7 @@ Based on [node-which](https://github.com/npm/node-which) but ported for Bare
 
 
 ```
-npm i bare-fs
+npm install bare-which
 ```
 
 ## Usage
