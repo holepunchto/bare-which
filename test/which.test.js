@@ -4,7 +4,8 @@ const which = require('../')
 const initFixtures = require('./fixtures')
 const { isWindows } = require('which-runtime')
 
-const pathExt = isWindows ? '.EXE' : ''
+const pathExt = isWindows ? '.EXE;.BAT' : ''
+const suffix = isWindows ? '.EXE' : ''
 
 test('which', (t) => {
   const unlikelyToExist = 'this-command-should-not-exist-anywhere'
@@ -30,8 +31,8 @@ test('which', (t) => {
     })
 
     await t.test('in path', async (t) => {
-      await t.is(await which('nonexecutable', { path, pathExt, nothrow: true }), null)
-      t.is(which.sync('nonexecutable', { path, pathExt, nothrow: true }), null)
+      await t.is(await which(`nonexecutable${suffix}`, { path, pathExt, nothrow: true }), null)
+      t.is(which.sync(`nonexecutable${suffix}`, { path, pathExt, nothrow: true }), null)
     })
   })
 
@@ -42,8 +43,8 @@ test('which', (t) => {
     })
 
     await t.test('in path', async (t) => {
-      await t.is(await which('executable', { path, pathExt, nothrow: true }), fixtures.executable)
-      t.is(which.sync('executable', { path, pathExt, nothrow: true }), fixtures.executable)
+      await t.is(await which(`executable${suffix}`, { path, pathExt, nothrow: true }), fixtures.executable)
+      t.is(which.sync(`executable${suffix}`, { path, pathExt, nothrow: true }), fixtures.executable)
     })
   })
 
@@ -54,8 +55,8 @@ test('which', (t) => {
     })
 
     await t.test('in path', async (t) => {
-      await t.alike(await which('shared', { path, pathExt, all: true, nothrow: true }), [fixtures.shared, fixtures.localShared])
-      t.alike(which.sync('shared', { path, pathExt, all: true, nothrow: true }), [fixtures.shared, fixtures.localShared])
+      await t.alike(await which(`shared${suffix}`, { path, pathExt, all: true, nothrow: true }), [fixtures.shared, fixtures.localShared])
+      t.alike(which.sync(`shared${suffix}`, { path, pathExt, all: true, nothrow: true }), [fixtures.shared, fixtures.localShared])
     })
   })
 })
