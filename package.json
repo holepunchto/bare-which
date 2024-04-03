@@ -4,7 +4,8 @@
   "description": "Finds instances of an executable in PATH",
   "main": "index.js",
   "scripts": {
-    "test": "brittle test/**/*.js",
+    "test": "brittle test/all.js",
+    "test:bare": "bare test/all.js",
     "lint": "standard",
     "lint:fix": "standard --fix"
   },
