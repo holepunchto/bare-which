@@ -3,7 +3,12 @@ Finds instances of an executable in PATH
 
 Based on [node-which](https://github.com/npm/node-which) but ported for Bare
 
-### Usage
+
+```
+npm i bare-fs
+```
+
+## Usage
 ```js
 const which = require('bare-which')
 
@@ -24,3 +29,7 @@ which.sync('ping', { path: someOtherPath, pathExt: somePathExt })
 await which('ping', { all: true })
 which.sync('ping', { all: true })
 ```
+
+## License
+
+Apache-2.0
