@@ -145,3 +145,7 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 bun.lockb
+
+# Ignore test fixtures
+test/fixtures/*
+!test/fixtures/index.js
