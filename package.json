@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Finds instances of an executable in PATH",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "lib/executable.js"
+  ],
   "scripts": {
     "test": "brittle test/all.js",
     "test:bare": "bare test/all.js",
