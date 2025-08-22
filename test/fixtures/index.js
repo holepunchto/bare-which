@@ -2,10 +2,13 @@ const fs = require('fs')
 const path = require('path')
 const { isWindows } = require('which-runtime')
 
-module.exports = function generateFixtures () {
+module.exports = function generateFixtures() {
   const fixtures = {
     executable: { content: '#!/bin/bash\necho "executable"', chmod: 0o755 },
-    nonexecutable: { content: '#!/bin/bash\necho "nonexecutable"', chmod: 0o644 },
+    nonexecutable: {
+      content: '#!/bin/bash\necho "nonexecutable"',
+      chmod: 0o644
+    },
     shared: { content: '#!/bin/bash\necho "shared"', chmod: 0o755 }
   }
 
@@ -18,7 +21,11 @@ module.exports = function generateFixtures () {
 
   for (const [name, { content, chmod }] of Object.entries(fixtures)) {
     const executable = chmod & 0o111
-    const fileName = isWindows ? (executable ? `${name}.EXE` : `${name}.TXT`) : name
+    const fileName = isWindows
+      ? executable
+        ? `${name}.EXE`
+        : `${name}.TXT`
+      : name
     const fixturePath = path.resolve(fixtureDir, fileName)
 
     fixturePaths[name] = fixturePath
@@ -29,7 +36,10 @@ module.exports = function generateFixtures () {
     fs.chmodSync(fixturePath, chmod)
   }
 
-  const localBinShared = path.resolve(fixtureLocalDir, isWindows ? 'shared.EXE' : 'shared')
+  const localBinShared = path.resolve(
+    fixtureLocalDir,
+    isWindows ? 'shared.EXE' : 'shared'
+  )
   fixturePaths.localShared = localBinShared
 
   if (!fs.existsSync(localBinShared)) {

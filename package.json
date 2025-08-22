@@ -1,29 +1,11 @@
 {
   "name": "bare-which",
   "version": "2.0.0",
-  "description": "Finds instances of an executable in PATH",
-  "main": "index.js",
-  "files": [
-    "index.js",
-    "lib"
-  ],
-  "scripts": {
-    "test": "npm run lint && npm run test:node && npm run test:bare",
-    "test:node": "node test.js",
-    "test:bare": "bare test.js",
-    "lint": "standard",
-    "lint:fix": "standard --fix"
+  "description": "Find a program in $PATH",
+  "exports": {
+    "./package": "./package.json",
+    ".": "./index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/holepunchto/bare-which.git"
-  },
-  "author": "Holepunch",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/holepunchto/bare-which/issues"
-  },
-  "homepage": "https://github.com/holepunchto/bare-which#readme",
   "imports": {
     "fs": {
       "bare": "bare-fs",
@@ -38,6 +20,26 @@
       "default": "process"
     }
   },
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "scripts": {
+    "test": "npm run lint && npm run test:node && npm run test:bare",
+    "test:node": "node test.js",
+    "test:bare": "bare test.js",
+    "lint": "prettier . --check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holepunchto/bare-which.git"
+  },
+  "author": "Holepunch",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/holepunchto/bare-which/issues"
+  },
+  "homepage": "https://github.com/holepunchto/bare-which#readme",
   "dependencies": {
     "bare-fs": "^3.0.0",
     "bare-path": "^3.0.0",
@@ -46,6 +48,7 @@
   },
   "devDependencies": {
     "brittle": "^3.5.0",
-    "standard": "^17.1.0"
+    "prettier": "^3.6.2",
+    "prettier-config-standard": "^7.0.0"
   }
 }
