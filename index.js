@@ -27,19 +27,13 @@ function getPathInfo(
   }
 ) {
   const pathEnv = !isPath(cmd)
-    ? [
-        ...(isWindows ? [process.cwd()] : []),
-        ...(optPath || '').split(optDelimiter)
-      ]
+    ? [...(isWindows ? [process.cwd()] : []), ...(optPath || '').split(optDelimiter)]
     : ['']
 
   if (!isWindows) return { pathEnv, pathExt: [''] }
 
-  const pathExtExe =
-    optPathExt || ['.EXE', '.CMD', '.BAT', '.COM'].join(optDelimiter)
-  const pathExt = pathExtExe
-    .split(optDelimiter)
-    .flatMap((item) => [item, item.toLowerCase()])
+  const pathExtExe = optPathExt || ['.EXE', '.CMD', '.BAT', '.COM'].join(optDelimiter)
+  const pathExt = pathExtExe.split(optDelimiter).flatMap((item) => [item, item.toLowerCase()])
 
   if (cmd.includes('.') && pathExt[0] !== '') pathExt.unshift('')
 
@@ -70,17 +64,13 @@ module.exports = exports = async function which(cmd, options = {}) {
             ignoreErrors: true
           }).then((isExec) => (isExec ? withExt : null))
         )
-      } else if (
-        await isExecutable(withExt, { pathExt: pathExtExe, ignoreErrors: true })
-      ) {
+      } else if (await isExecutable(withExt, { pathExt: pathExtExe, ignoreErrors: true })) {
         return withExt
       }
     }
   }
 
-  const found = (await Promise.all(foundPromises)).filter(
-    (item) => item !== null
-  )
+  const found = (await Promise.all(foundPromises)).filter((item) => item !== null)
 
   if (all && found.length > 0) return found
   if (nothrow) return null
@@ -99,9 +89,7 @@ exports.sync = function which(cmd, options = {}) {
 
     for (const ext of pathExt) {
       const withExt = pathCommand + ext
-      if (
-        isExecutable.sync(withExt, { pathExt: pathExtExe, ignoreErrors: true })
-      ) {
+      if (isExecutable.sync(withExt, { pathExt: pathExtExe, ignoreErrors: true })) {
         if (!all) return withExt
 
         found.push(withExt)
